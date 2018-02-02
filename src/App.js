@@ -14,7 +14,7 @@ const Menu = (props) => (
         </div>
         <Route exact path="/" render={() => <AnecdoteList anecdotes={props.anecdotes}/>} />
         <Route exact path="/anecdotes" render ={() => <AnecdoteList anecdotes={props.anecdotes}/>} />
-        <Route exact path="/create" render={() => <CreateNew addNew={props.addNew}/>} />
+        <Route exact path="/create" render={({history}) => <CreateNew addNew={props.addNew} history={history}/>} />
         <Route exact path="/about" render={() => <About/>} />
         <Route exact path="/anecdotes/:id" render={({match}) =>
           <Anecdote anecdote={props.anecdoteById(match.params.id)} />}
@@ -76,12 +76,13 @@ class CreateNew extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    this.props.addNew({
+    const id = this.props.addNew({
       content: this.state.content,
       author: this.state.author,
       info: this.state.info,
       votes: 0
     })
+    this.props.history.push('/anecdotes/' + id)
   }
 
   render() {
@@ -137,6 +138,7 @@ class App extends React.Component {
   addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     this.setState({ anecdotes: this.state.anecdotes.concat(anecdote) })
+    return anecdote.id
   }
 
   anecdoteById = (id) =>
