@@ -1,10 +1,22 @@
 import React from 'react'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
-const Menu = () => (
-  <div>    
-    <a href='#'>anecdotes</a>&nbsp;
-    <a href='#'>create new</a>&nbsp;
-    <a href='#'>about</a>&nbsp;
+const Menu = (props) => (
+  <div>
+    <Router>
+      <div>    
+        <div>
+          <Link to="/">home</Link> &nbsp;
+          <Link to='/anecdotes'>anecdotes</Link> &nbsp;
+          <Link to ='/create'>create new</Link> &nbsp;
+          <Link to ='/about'>about</Link> &nbsp;
+        </div>
+        <Route exact path="/" render={() => <AnecdoteList anecdotes={props.anecdotes}/>} />
+        <Route exact path="/anecdotes" render ={() => <AnecdoteList anecdotes={props.anecdotes}/>} />
+        <Route exact path="/create" render={() => <CreateNew addNew={props.addNew}/>} />
+        <Route exact path="/about" render={() => <About/>} />
+      </div>
+    </Router>
   </div>
 )
 
@@ -139,10 +151,7 @@ class App extends React.Component {
     return (
       <div>
         <h1>Software anecdotes</h1>
-          <Menu />
-          <AnecdoteList anecdotes={this.state.anecdotes} />
-          <About />      
-          <CreateNew addNew={this.addNew}/>
+          <Menu anecdotes={this.state.anecdotes} addNew={this.addNew}/>
         <Footer />
       </div>
     );
