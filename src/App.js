@@ -17,7 +17,11 @@ const Menu = (props) => (
         <Route exact path="/create" render={({history}) => <CreateNew addNew={props.addNew} history={history}/>} />
         <Route exact path="/about" render={() => <About/>} />
         <Route exact path="/anecdotes/:id" render={({match}) =>
-          <Anecdote anecdote={props.anecdoteById(match.params.id)} />}
+          <Anecdote 
+            anecdote={props.anecdoteById(match.params.id)}
+            message={props.message} 
+          />
+        }
         />
       </div>
     </Router>
@@ -138,6 +142,7 @@ class App extends React.Component {
   addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     this.setState({ anecdotes: this.state.anecdotes.concat(anecdote) })
+    this.setState({notification: "A new anecdote " + anecdote.content + " created!"})
     return anecdote.id
   }
 
@@ -165,6 +170,7 @@ class App extends React.Component {
             anecdotes={this.state.anecdotes} 
             addNew={this.addNew}
             anecdoteById={this.anecdoteById}
+            message={this.state.notification}
           />
         <Footer />
       </div>
