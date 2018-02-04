@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Anecdote from './Anecdote'
-import {ListGroup, ListGroupItem} from 'react-bootstrap'
+import {ListGroup, ListGroupItem,Grid, Row, Col} from 'react-bootstrap'
 
 const Menu = (props) => {
   const style = {
@@ -54,19 +54,34 @@ const AnecdoteList = ({ anecdotes }) => (
   </div>
 )
 
-const About = () => (
+const About = () => {
+  const randomNumber = Math.floor(Math.random() * 2) + 1 
+  const images = ["https://pbs.twimg.com/profile_images/1152859879/kuva_400x400.jpg", "https://cdn.meme.am/images/400x/8455239.jpg"]
+  return (
   <div>
     <h2>About anecdote app</h2>
     <p>According to Wikipedia:</p>
-    
-    <em>An anecdote is a brief, revealing account of an individual person or an incident. 
+
+    <Grid>
+      <Row className="show-grid">
+      <Col md="6">
+      <em>An anecdote is a brief, revealing account of an individual person or an incident. 
       Occasionally humorous, anecdotes differ from jokes because their primary purpose is not simply to provoke laughter but to reveal a truth more general than the brief tale itself, 
       such as to characterize a person by delineating a specific quirk or trait, to communicate an abstract idea about a person, place, or thing through the concrete details of a short narrative. 
       An anecdote is "a story with a point."</em>
+      </Col>
+
+      <Col md="6">
+        <img src= {images[randomNumber - 1]}/>
+      </Col>
+      </Row>
+
+      </Grid>
 
     <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
   </div>
-)
+  )
+}
 
 const Footer = () => (
   <div>
