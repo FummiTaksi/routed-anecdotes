@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Anecdote from './Anecdote'
+import {ListGroup, ListGroupItem} from 'react-bootstrap'
 
 const Menu = (props) => {
   const style = {
@@ -41,13 +42,15 @@ const Menu = (props) => {
 const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
-    <ul>
-      {anecdotes.map(anecdote => 
-      <li key={anecdote.id} >
+    <ListGroup>
+      {anecdotes.map(anecdote =>
+       <ListGroupItem>
+      <a key={anecdote.id} >
         <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
-      </li>)
+      </a>
+      </ListGroupItem>)
       }
-    </ul>  
+    </ListGroup>  
   </div>
 )
 
@@ -174,7 +177,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <h1>Software anecdotes</h1>
           <Menu 
             anecdotes={this.state.anecdotes} 
