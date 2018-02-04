@@ -2,31 +2,41 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Anecdote from './Anecdote'
 
-const Menu = (props) => (
+const Menu = (props) => {
+  const style = {
+    'background-color': 'lightblue',
+    padding: 10
+  }
+  return (
   <div>
-    <Router>
-      <div>    
-        <div>
-          <Link to="/">home</Link> &nbsp;
-          <Link to='/anecdotes'>anecdotes</Link> &nbsp;
-          <Link to ='/create'>create new</Link> &nbsp;
-          <Link to ='/about'>about</Link> &nbsp;
-        </div>
-        <Route exact path="/" render={() => <AnecdoteList anecdotes={props.anecdotes}/>} />
-        <Route exact path="/anecdotes" render ={() => <AnecdoteList anecdotes={props.anecdotes}/>} />
-        <Route exact path="/create" render={({history}) => <CreateNew addNew={props.addNew} history={history}/>} />
-        <Route exact path="/about" render={() => <About/>} />
-        <Route exact path="/anecdotes/:id" render={({match}) =>
-          <Anecdote 
-            anecdote={props.anecdoteById(match.params.id)}
-            message={props.message} 
-          />
-        }
-        />
+  <Router>
+    <div>    
+      <div style= {style}>
+        <Link to="/">home</Link> &nbsp;
+        <Link to='/anecdotes'>anecdotes</Link> &nbsp;
+        <Link to ='/create'>create new</Link> &nbsp;
+        <Link to ='/about'>about</Link> &nbsp;
       </div>
-    </Router>
-  </div>
-)
+      <Route exact path="/" render={() => <AnecdoteList anecdotes={props.anecdotes}/>} />
+      <Route exact path="/anecdotes" render ={() => <AnecdoteList anecdotes={props.anecdotes}/>} />
+      <Route exact path="/create" render={({history}) => <CreateNew addNew={props.addNew} history={history}/>} />
+      <Route exact path="/about" render={() => <About/>} />
+      <Route exact path="/anecdotes/:id" render={({match}) =>
+        <Anecdote 
+          anecdote={props.anecdoteById(match.params.id)}
+          message={props.message} 
+        />
+      }
+      />
+    </div>
+  </Router>
+</div>
+  )
+
+}
+  
+
+
 
 const AnecdoteList = ({ anecdotes }) => (
   <div>
